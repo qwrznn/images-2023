@@ -1,7 +1,6 @@
 <?php
 
 include_once 'students.php';
-
 $result = [];
 for ($i = 0; $i < count($students); $i++) {
     $result[] = (int) round(array_sum($students[$i]["marks"]) / count($students[$i]["marks"]));
@@ -38,17 +37,19 @@ for ($i = 0; $i < $columns; $i++) {
     $maxv = max($result[$i], $maxv);
 }
 // Рисуем каждую колонку
-for ($i = 0; $i < $columns; $i++) {
-    foreach ($stat as $key => $value) {
-        $column_height = ($height / 100) * (($result[$i] / $maxv) * 100);
-        $x1 = $i * $column_width;
-        $y1 = $height - $column_height;
-        $x2 = (($i + 1) * $column_width) - $padding;
-        $y2 = $height;
-        $colors = [5 => $red, 4 => $navy, 3 => $gray, 2 => $white, 1 => $darknavy];
-        imagefilledrectangle($im, $x1, $y1, $x2, $y2, $colors[$key]);
-    }
+// for ($i = 0; $i < $columns; $i++) {
+$i = 0;
+foreach ($stat as $key => $value) {
+    $column_height = ($height / 100) * (($result[$i] / $maxv) * 100);
+    $x1 = $i * $column_width;
+    $y1 = $height - $column_height;
+    $x2 = (($i + 1) * $column_width) - $padding;
+    $y2 = $height;
+    $colors = [5 => $navy, 4 => $red, 3 => $gray, 2 => $darkred];
+    imagefilledrectangle($im, $x1, $y1, $x2, $y2, $colors[$key]);
+    $i++;
 }
+// }
 
 // Посылаем информацию заголовку, можно заменить на JPEG или GIF
 header("Content-type: image/png");
